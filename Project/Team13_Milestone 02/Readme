@@ -1,0 +1,39 @@
+Team 13, Milestone 02: Forward position kinematics (EDPT-1009, Winter 2026)
+
+REPORT
+- Team13_Milestone02_Report.docx   the report (Word), building on the Milestone 01 report
+- Team13_Milestone02_Report.pdf    the same report as PDF
+- Report_LaTeX_source.zip          LaTeX source and figures of the report
+
+SCRIPTS (run everything from inside this folder)
+MATLAB functions
+- transformation_func.m            T = transformation_func(theta, d, a, alpha): DH matrix of one row (symbolic angle)
+- forward_kinematics_func.m        X = forward_kinematics_func(): multiplies the 4 DH matrices, returns symbolic [x; y; z]
+- print_fk_equations.m             prints x, y, z and 0T4, and evaluates test cases A and B
+- test_transformation_func_RR.m    checks transformation_func against Tutorial 03, Example 1
+- plot_dh_frames.m                 draws the DH frames at q = [0 0 0 0]
+Simulink / Simscape Multibody
+- robot_fk_test.slx                test model: q_deg (degrees, base workspace) drives the arm; displays the
+                                   Simscape end effector, the forward-kinematics end effector and their error.
+                                   Set q_deg (default [30 20 -40 25]) and press Run; Mechanics Explorer opens.
+- run_fk_tests.m                   simulates test cases A and B and prints Simscape vs forward kinematics
+- robot_matlab.slx                 the arm imported from robot_matlab.urdf with smimport
+- build_fk_test_model.m            builds robot_fk_test.slx from robot_matlab.slx
+- robot_matlab.urdf, meshes/       the course URDF and meshes used for the import
+Python (ROS 2 Jazzy)
+- forward_kinematics.py            transformation_func and forward_kinematics_func with SymPy
+- fk_gazebo_node.py                ROS 2 node: publishes the joint angles on /Joint_1..4/command and subscribes to
+                                   /end_effector_pose in Gazebo, then prints Gazebo vs forward kinematics.
+                                   Usage, with the course package's spawn_gazebo.launch.py running:
+                                   python3 fk_gazebo_node.py 30 20 -40 25   (angles in degrees)
+
+No XML file is included: no CAD modifications were made in this milestone, and the Simscape model is
+imported from the course URDF.
+
+RESULTS (end effector, world frame)
+- Case A, q = (0, 0, 0, 0):          Simscape and Gazebo agree with the equations to within 0.026 mm
+- Case B, q = (30, 20, -40, 25) deg: Simscape and Gazebo agree with the equations to within 0.027 mm
+
+MEDIA
+- Video1.mp4   MATLAB functions and Simscape Multibody simulation (captioned)
+- Video2.mp4   Gazebo simulation and the Python ROS 2 node (captioned)
