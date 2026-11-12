@@ -1,0 +1,58 @@
+Team 13, Milestone 03: Inverse position kinematics (Newton-Raphson) and velocity kinematics (EDPT-1009, Winter 2026)
+
+REPORT
+- Team13_Milestone03_Report.docx   the report (Word), building on the Milestone 02 report
+- Team13_Milestone03_Report.pdf    the same report as PDF
+- Report_LaTeX_source.zip          LaTeX source and figures of the report
+
+SCRIPTS (run everything from inside the Scripts folder)
+MATLAB functions
+- transformation_func.m            DH matrix of one row (Milestone 02)
+- forward_kinematics_func.m        X = forward_kinematics_func(): symbolic end-effector position (Milestone 02)
+- inverse_jacobian_matrix.m        J_inv = inverse_jacobian_matrix(q): numeric pseudo-inverse of dF/dq (3x4)
+- inverse_kinematics_func.m        q = inverse_kinematics_func(q0, X): Newton-Raphson inverse position kinematics
+- jacobian_matrix.m                J = jacobian_matrix(q): symbolic 6x4 Jacobian
+- forward_velocity_kinematics.m    V_F = forward_velocity_kinematics(q, q_dot) = J * q_dot
+- inverse_velocity_kinematics.m    q_dot = inverse_velocity_kinematics(q, V_F) = J_inv * v
+- run_m3_tests.m                   the 3 test cases: IK -> FK and IVK -> FVK (output in run_m3_tests_output.txt)
+- print_m3_equations.m             prints the symbolic Jacobian and V_F (output in print_m3_equations_output.txt)
+Simulink / Simscape Multibody
+- robot_m3_test.slx                desired x, y, z and vx, vy, vz (separate inputs) -> IK and IVK blocks ->
+                                   q1..q4 each driving its own joint -> Transform Sensors (position, linear and
+                                   angular velocity) compared with the FK and FVK equations.
+                                   Set X_d and V_d (m, m/s, frame 0) in the workspace and press Run.
+- run_m3_simulink_tests.m          simulates the 3 test cases (output in run_m3_simulink_tests_output.txt)
+- meshes/                          the course meshes used by the model
+Arduino (hardware, open loop)
+- open_loop_test/open_loop_test.ino  Arduino Uno + PCA9685: all 5 servos to home (90 deg), then each servo
+                                   +/-30 deg and back, printing every step on the Serial Monitor (shown in Video3)
+Python (ROS 2 Jazzy)
+- forward_kinematics.py            forward_kinematics_func (Milestone 02)
+- inverse_kinematics.py            inverse_jacobian_matrix and inverse_kinematics_func
+- velocity_kinematics.py           jacobian_matrix, forward_velocity_kinematics, inverse_velocity_kinematics
+- run_m3_tests.py                  the same 3 test cases in Python (output in run_m3_tests_py_output.txt)
+- ik_node.py                       ROS 2 node: IK for a desired position, publishes the joint angles to Gazebo
+                                   (/Joint_N/command) and to fk_node (/ik/joint_angles)
+- fk_node.py                       ROS 2 node: Milestone 02 forward kinematics of the received angles, compared
+                                   with /end_effector_pose from Gazebo
+- velocity_node.py                 ROS 2 node: moves the end effector with a constant velocity using the inverse
+                                   velocity kinematics, and compares the Gazebo velocity with the FVK
+Usage, with the course package's spawn_gazebo.launch.py running:
+  python3 fk_node.py
+  python3 ik_node.py 150 120 250                          (desired position, mm, frame 0)
+  python3 velocity_node.py 150 120 250 20 -10 15 3        (start position mm, velocity mm/s, duration s)
+
+TEST CASES (frame 0 = top of the base; all four joints move in every case)
+- Case 1: X = (150, 120, 250) mm,   v = (20, -10, 15) mm/s
+- Case 2: X = (-180, 100, 200) mm,  v = (-15, 20, 10) mm/s
+- Case 3: X = (-100, -200, 150) mm, v = (10, 15, -20) mm/s
+
+RESULTS
+- MATLAB / Python: IK -> FK position error < 2e-5 mm; IVK -> FVK velocity error ~1e-14 mm/s
+- Simscape vs equations: position within 0.03 mm, linear velocity within 0.003 mm/s
+- Gazebo vs equations: see the report
+
+MEDIA
+- Video1.mp4   inverse position kinematics, validated with the forward kinematics, Simscape and Gazebo (screen recording; waiting time cut out, nothing sped up)
+- Video2.mp4   forward and inverse velocity kinematics, validated with Simscape and Gazebo (screen recording; waiting time cut out, nothing sped up)
+- Video3.mp4   hardware fabrication and open-loop Arduino test (raw recording)

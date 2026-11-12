@@ -1,0 +1,36 @@
+
+================ Case 1 ================
+Desired EE position (mm):      [150. 120. 250.]
+IK: 6 iterations, final error = 1.57e-05 mm
+IK joint angles (deg):         [ 42.319   7.405  64.219 -36.463]
+FK of the IK angles (mm):      [150. 120. 250.]
+Position error (mm):           1.57e-05
+Desired EE velocity (mm/s):    [ 20. -10.  15.]
+IVK joint velocities (deg/s):  [-6.234 -3.998 -5.333  5.103]
+FVK linear velocity (mm/s):    [ 20. -10.  15.]
+FVK angular velocity (deg/s):  [ 4.334 -4.76  -6.234]
+Velocity error (mm/s):         1.30e-14
+
+================ Case 2 ================
+Desired EE position (mm):      [-180.  100.  200.]
+IK: 9 iterations, final error = 4.41e-08 mm
+IK joint angles (deg):         [ -32.468    7.859 -109.007  -69.677]
+FK of the IK angles (mm):      [-180.  100.  200.]
+Position error (mm):           4.41e-08
+Desired EE velocity (mm/s):    [-15.  20.  10.]
+IVK joint velocities (deg/s):  [-2.459  6.883 12.798  5.801]
+FVK linear velocity (mm/s):    [-15.  20.  10.]
+FVK angular velocity (deg/s):  [ 0.062  0.097 -2.459]
+Velocity error (mm/s):         1.52e-14
+
+================ Case 3 ================
+Desired EE position (mm):      [-100. -200.  150.]
+IK: 9 iterations, final error = 8.78e-08 mm
+IK joint angles (deg):         [  60.292   72.873  -30.899 -122.786]
+FK of the IK angles (mm):      [-100. -200.  150.]
+Position error (mm):           8.78e-08
+Desired EE velocity (mm/s):    [ 10.  15. -20.]
+IVK joint velocities (deg/s):  [  0.321   3.115   1.033 -13.849]
+FVK linear velocity (mm/s):    [ 10.  15. -20.]
+FVK angular velocity (deg/s):  [-10.221   5.832   0.321]
+Velocity error (mm/s):         1.94e-14
